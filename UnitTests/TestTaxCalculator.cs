@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace UnitTests
 {
@@ -8,10 +9,20 @@ namespace UnitTests
         [TestMethod]
         public void TestGetNet()
         {
-            decimal gross = 3400;
-            decimal expectedNet = 2860;
-            decimal net = TaxCalculator.TaxCalculator.GetNet(gross);
-            Assert.AreEqual(expectedNet, net);
+            Dictionary<decimal, decimal> pairs = new Dictionary<decimal, decimal>
+            {
+                {3400, 2860},
+                {980, 980 },
+                {2700, 2275 }
+            };
+            decimal net;
+
+            foreach (KeyValuePair<decimal, decimal> pair in pairs)
+            {
+                net = TaxCalculator.TaxCalculator.GetNet(pair.Key);
+                Assert.AreEqual(pair.Value, net);
+            }
+            
         }
     }
 }
